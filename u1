@@ -1,0 +1,32 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity gerbang_cascade is
+    Port (
+        A     : in  STD_LOGIC;
+        B     : in  STD_LOGIC;
+        Y_AND : out STD_LOGIC;
+        Y_OR  : out STD_LOGIC;
+        Y_XOR : out STD_LOGIC
+    );
+end gerbang_cascade;
+
+architecture Dataflow of gerbang_cascade is
+
+    signal S_AND : STD_LOGIC;  -- penghubung: output AND → input OR
+    signal S_OR  : STD_LOGIC;  -- penghubung: output OR  → input XOR
+
+begin
+
+    -- Stage 1: A AND B → S_AND (sekaligus keluar sebagai Y_AND)
+    S_AND <= A and B;
+    Y_AND <= S_AND;
+
+    -- Stage 2: S_AND OR B → S_OR (Y_AND dipakai sebagai input OR)
+    S_OR  <= S_AND or B;
+    Y_OR  <= S_OR;
+
+    -- Stage 3: S_OR XOR A → Y_XOR (Y_OR dipakai sebagai input XOR)
+    Y_XOR <= S_OR xor A;
+
+end Dataflow;
