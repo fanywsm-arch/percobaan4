@@ -1,0 +1,27 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity gerbang is
+    Port (
+        A     : in  STD_LOGIC;
+        B     : in  STD_LOGIC;
+        Y_XOR : out STD_LOGIC;
+        Y_AND : out STD_LOGIC;
+        Y_OR  : out STD_LOGIC
+    );
+end gerbang;
+
+architecture Dataflow of gerbang is
+
+begin
+
+    -- XOR: Data(0)=B, Data(1)=A  → LPM_XOR2_1 / Mxor_Y_XOR
+    Y_XOR <= B xor A;
+
+    -- AND: I1=A, I0=A  → Y_AND_imp_Y_AND1 (kedua input dari A)
+    Y_AND <= A and A;
+
+    -- OR: I1=B, I0=B   → Y_OR_imp_Y_OR1 (kedua input dari B)
+    Y_OR  <= B or B;
+
+end Dataflow;
